@@ -66,12 +66,6 @@ class DropoutsController extends Controller
                 'university_id' => $student->university_id
             ]);
 
-            // will update after admin approved
-            // $student->update([
-            //     'status_id' => 3,
-            // ]);
-
-
              $dropout->download($student , 'درخواست-منفکی', $request, $dropout);
             
         });
@@ -90,6 +84,7 @@ class DropoutsController extends Controller
 
              $dropout->student->update([
                 'status_id' => 3,
+                'group_id' => null,
             ]);
          }
  
@@ -111,8 +106,10 @@ class DropoutsController extends Controller
 
         \DB::transaction(function () use ($dropout){
             $dropout->student->update([
+                
                 'status_id' => 1
             ]);
+
             $dropout->delete();
         });
 
