@@ -87,7 +87,8 @@ class LeavesController extends Controller
             ]);
 
             $leave->student->update([
-                'status_id' => 4
+                'status_id' => 4,
+                'group_id' => null
             ]);
         }
 
