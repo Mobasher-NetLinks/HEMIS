@@ -56,6 +56,10 @@ class Course extends Model
     {
         return $this->hasMany(Score::class);
     }
+    public function getStudentScore($student_id)
+    {
+        return $this->scores()->where('student_id', $student_id)->first();
+    }
 
     public function courseTimes()
     {

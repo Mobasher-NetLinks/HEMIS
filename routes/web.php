@@ -67,6 +67,9 @@ Route::group(['middleware' => 'auth'], function() {
         Route::get('students/{student}/student-form' , 'StudentFormsController@index')->name('student.form');
         Route::post('students/{student}/generate-form' , 'StudentFormsController@generateForm')->name('student.generate-form');
 
+        Route::get('students/‌semester-base/result', 'StudentsResultController@index')->name('students.semester-base.result');
+        Route::Post('students/semester-base/result/create', 'StudentsResultController@create')->name('students.semester-base.result.create');
+
         Route::get('/transcript','TranscriptController@create')->name('transcript');
 
     });

@@ -145,6 +145,19 @@ function getStringBetween($string, $start, $end) //used to parse pdf files confi
     return substr($string, $ini, $len);
 }
 
+function getGrade($score)
+{
+  if($score > 90) {
+      return 'A';
+  }
+  elseif($score >= 80 and $score <= 89){
+    return 'B';
+  }
+  else{
+      return 'C';
+  }
+}
+
 
 function convertNumberToFarsi($number) 
 {
