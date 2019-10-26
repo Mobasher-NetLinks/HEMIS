@@ -22,5 +22,10 @@ class Group extends Model
     public function courses()
     {
         return $this->hasMany(\App\Models\Course::class);
-    }    
+    }  
+    public function department()
+    {
+        return $this->belongsTO(\App\Models\Department::class);
+    }  
+    
 }

@@ -404,6 +404,7 @@ return [
     'select_language' => ' ژبه انتخاب کری',
     'pashto' => ' پشتو',
     'dari' => ' دری',
+    'endDate' => ' تاریخ ختم',
 
 
     

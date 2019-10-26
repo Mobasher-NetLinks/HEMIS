@@ -25,12 +25,10 @@ class StudentsResultController extends Controller
     public function create(Request $request){
 
         $department = Department::find($request->department);
-        $students = $department->group->students;
         // dd($students[0]->courses()->where('semester',$request->semester)->where('year',$request->year)->get());
+        $students = $department->group->students;
         $courseSubjects = $students[0]->courses->where('semester', $request->semester)->where('year', $request->year);
         $subjectsCount = $courseSubjects->count();
-
-        
         return view ('students.results.print', [
             'title' => trans('general.students_result'),
             'description' => trans('general.create_students_result'),
@@ -48,13 +46,19 @@ class StudentsResultController extends Controller
         // $department = Department::find($request->department);
         // $semester = $request->semester;
         // $year = $request->year;
+        // $students = $department->group->students;
+        // $courseSubjects = $students[0]->courses->where('semester', $request->semester)->where('year', $request->year);
+        // $subjectsCount = $courseSubjects->count();
 
-        // $pdf = \PDF::loadView('students.results.print', compact('university', 'department','semester','year'), [], [
+        
+        // $pdf = \PDF::loadView('students.results.print', compact('university', 'department','semester','year','students','subjectsCount','courseSubjects'), [], [            
         //     'format' => 'A4-L',
         //     'direction' => 'rlt'
         // ]);
 
-        // return $pdf->stream($university->name. ''. $department->name . '_'.$semester.'.pdf');
+        // return $pdf->stream('document.pdf');
+
+        // // return $pdf->stream($university->name. ''. $department->name . '_'.$semester.'.pdf');
         
     }
 

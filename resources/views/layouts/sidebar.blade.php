@@ -119,6 +119,13 @@
                     </a>
                 </li>
                 <hr>
+                <li class="nav-item {{ request()->is('student/result') ? 'active' : '' }}">
+                    <a href="{{ route('students.semester-base.result') }}" class="nav-link ">
+                        <i class="icon-printer"></i>
+                        <span class="title">{{ trans('general.students_result') }}</span>
+                    </a>
+                </li>
+                <hr>
                 @endif
             </ul>
         </li>
