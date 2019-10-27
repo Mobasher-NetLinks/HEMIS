@@ -26,6 +26,11 @@ class Group extends Model
     public function department()
     {
         return $this->belongsTO(\App\Models\Department::class);
-    }  
+    } 
+
+    public function loadStudents()
+    {
+        return $this->load('students');
+    }
     
 }

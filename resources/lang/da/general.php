@@ -454,4 +454,5 @@ return [
     'danger_credits' => ' کریدت اختار',
     'failled_students' => ' ناکام',
     'divested_students' => ' محروم',
+    'university_or_inistitute' => ' پوهنتون/موسسه تحصیلی',
 ];

@@ -60,7 +60,7 @@ class Department extends Model
     }
     public function group()
     {
-        return $this->hasOne(\App\Models\Group::class);
+        return $this->hasMany(\App\Models\Group::class);
     }
 
 }

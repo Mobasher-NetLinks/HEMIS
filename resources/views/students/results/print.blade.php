@@ -6,52 +6,34 @@
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>Document</title>
 	<style>
-	body {
-		direction: rtl;
-        width: 100%;
-        height: 100%;
-        margin: 0;
-        padding: 0;
-        background-color: #FAFAFA;
-        font: 8pt "nazanin";
-    }
-    * {
-        box-sizing: border-box;
-        -moz-box-sizing: border-box;
-    }
-    .page {
-        width: 100%;
-        min-height: 100%;
-        padding: 2mm;
-        margin: 3mm auto;
-        border: 1px #D3D3D3 solid;
-        border-radius: 2px;
-        background: white;
-        box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-    }
-    @page {
-        size: A4;
-        margin: 0;
-    }
-    @media print {
-        html, body {
-            width: 210mm;
-            height: 297mm;        
-        }
-        .page {
-            margin: 0;
-            border: initial;
-            border-radius: initial;
-            width: initial;
-            min-height: initial;
-            box-shadow: initial;
-            background: initial;
-            page-break-after: always;
-        }
-    }
-	p {
-		margin:0;
-	}
+		td, th, p, div, span {
+			font-family: 'nazanin';
+			font: 12px;
+		}
+		.table td,.table th{
+			border:1px solid #aaa;
+			padding:1px 0;
+			text-align:center;
+			font-size:12px;
+		}
+		table{
+			width:100%;
+			padding:1px 0;
+			border-collapse: collapse;
+		}
+		.head td{
+			padding:2px 0;
+		}
+		@page {
+			size: auto;   /* auto is the initial value */
+			margin:4cm  4% 4cm 2%;
+			margin-header: 2mm; 
+			margin-footer: 5mm;
+			/* header: html_myHeader;
+			footer: html_myFooter; */
+
+		}
+		
 	.table td,.table th{	    
 	    padding:1px 1px; 	        
 		border: 1px solid #000;
@@ -83,23 +65,21 @@
 		text-align: center;
 		text-decoration: ivory;
 	}
-</style>
+	</style>
 </head>
-<body>
-	<div class="page">
+<body style="direction: rtl;">
+	<div>
 		<table class="header_table"  style="width:100%;">
 			<tr>
 				<td style="text-align:left;width:30%;padding-left:17%;vertical-align:top;">
 					<img src="{{file_exists($university->photo_url) ? asset($university->photo_url) : asset('img/wezarat-logo.jpg') }}"  style="max-width: 80px"/>		
-                </td>
-                <td  style="text-align:center;width:40%;vertical-align:top;">
-					<br>
-					<br>
+				</td>
+				<td  style="text-align:center;width:40%;vertical-align:top;">
 				<p> <span style="font-size: 12px">{{trans('general.governament_title')}}</span></p>					
 				<p> <span style="font-size: 12px">{{trans('general.ministry_title')}}</span></p>					
-				<p>پوهنتون/موسسه تحصیلی: <span style="font-size: 12px">{{$university->name}}</span></p>	
+				<p>{{__('general.university_or_inistitute')}}: <span style="font-size: 12px">{{$university->name}}</span></p>	
 				<p> <span style="font-size: 12px">{{trans('general.student_affair_authority')}}</span></p>					
-				<p> <span style="font-size: 12px">پوهنځی: {{$department->faculty}}</span> <span style="font-size: 12px">دیپارتمنت: {{$department->name}}</span</p>					
+				<p> <span style="font-size: 12px">{{__('general.faculty')}}: {{$department->name}}</span> <span style="font-size: 12px">{{__('general.department')}}: {{$department->name}}</span></p>					
 				<td style="text-align:right;width:17%;padding-left:0%;vertical-align:top;">
 					<img src="{{ asset('img/wezarat-logo.jpg') }}"  style="max-width: 80px"/>		
 				</td>
@@ -145,7 +125,6 @@
 			<p> <span style="font-size: 16px; font-wdith :bold">{{trans('general.credit_base_result_table')}} - {{trans('general.semester')}} {{$semester}}
 				&nbsp;&nbsp; &nbsp;&nbsp; {{trans('general.class_year')}}2. &nbsp;&nbsp; &nbsp;&nbsp; .{{trans('general.department')}}{{$department->name}}.&nbsp;&nbsp; &nbsp;&nbsp; {{trans('general.year')}}{{$year}} </span></p>								
 		</div>
-		<br>
 		<table class="table"  style="width:100%;table-layout: fixed;">
 			<tr>
 				<th rowspan="3" style="width:2%">{{__('general.number')}}</th>
@@ -306,4 +285,7 @@
 	</div>
 </body>
 </html>
+{{-- <script>
+	window.print();
+</script> --}}
 	
