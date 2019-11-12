@@ -28,9 +28,20 @@ class AttendanceController extends Controller
 
     public function print($course)
     {
-        $pdf = \PDF::loadView('course.attendance.print', compact('course'), [], [
-            //'format' => 'A4-L'
-        ]);
+        if($course->subject->credits >= 2){
+
+            $pdf = \PDF::loadView('course.attendance.print', compact('course'), [], [
+                'format' => 'A4-L'
+            ]);
+        }
+        else{
+
+            $pdf = \PDF::loadView('course.attendance.print', compact('course'), [], [
+                // 'format' => 'A4-L'
+            ]);
+        }
+       
+        
 
         return $pdf->stream($course->code.'.pdf');
     }

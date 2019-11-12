@@ -59,17 +59,16 @@ table{
 		
 	</htmlpagefooter>
 
-	@if($course->subject->credits > 2)
 	<table  class="table" >
 		<thead>
 			<tr>
-				<td width="25px" rowspan="2">
+				<td width="15px" rowspan="2">
 					شماره
 				</td>
-				<td style="width:80px"  colspan="2">
+				<td style="width:60px"  colspan="2">
 					شهرت
 				</td>
-				<td colspan="{{ 32 }}">
+				<td colspan="{{ $course->subject->credits * 16 }}">
 					تعداد ساعات تدریس
 				</td>
 				<td width="80" rowspan="2">
@@ -83,7 +82,7 @@ table{
 				<td style="width:70px">
 					ولد
 				</td>
-				@for($i = 1; $i <= 32 ; $i++)
+				@for($i = 1; $i <= $course->subject->credits * 16 ; $i++)
 					<td style="width:18px;color:#ccc;">
 						
 					</td> 
@@ -102,7 +101,7 @@ table{
 					<td>
 						{{ $student->father_name }}
 					</td>
-					@for($i = 1; $i <= 32; $i++)
+					@for($i = 1; $i <= $course->subject->credits * 16; $i++)
 						<td>					
 						</td>					
 					@endfor
@@ -112,60 +111,6 @@ table{
 			@endforeach
 		</tbody>
 	</table>
-	@else
-	<table  class="table" >
-		<thead>
-			<tr>
-				<td width="35px" rowspan="2">
-					شماره
-				</td>
-				<td style="width:100px"  colspan="2">
-					شهرت
-				</td>
-				<td colspan="{{ 16}}">
-					تعداد ساعات تدریس
-				</td>
-				<td width="100" rowspan="2">
-					ملاحظات
-				</td>
-			</tr>
-			<tr class="head">
-				<td style="width:100px">
-					اسم
-				</td>
-				<td style="width:100px">
-					ولد
-				</td>
-				@for($i = 1; $i <= 16 ; $i++)
-					<td style="width:30px;color:#ccc;">
-						
-					</td> 
-				@endfor			
-			</tr>
-		</thead>
-		<tbody>
-			@foreach($course->students as $student)
-				<tr>
-					<td>
-						{{ $loop->iteration }}
-					</td>
-					<td>
-						{{ $student->fullName }}
-					</td>						
-					<td>
-						{{ $student->father_name }}
-					</td>
-					@for($i = 1; $i <= 16; $i++)
-						<td>					
-						</td>					
-					@endfor
-					<td>
-					</dt>											
-				</tr>    
-			@endforeach
-		</tbody>
-	</table>
-	@endif
 </body>
 
 </html>
