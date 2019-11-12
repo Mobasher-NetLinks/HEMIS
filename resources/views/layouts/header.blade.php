@@ -27,11 +27,19 @@ Carbon::setLocale('fa');
                 </button>
                 <ul class="dropdown-menu" role="menu">
                     <li>
-                    <a href="{{route('locale' , 'pa')}}">
-                            <i class="icon-pencil"></i> {{trans('general.pashto')}} </a>
+                    @if(auth('user')->check())
+                        <a href="{{route('locale' , 'pa')  }}">
+                    @else
+                        <a href="{{route('teacher.locale' , 'pa')  }}">
+                    @endif
+                        <i class="icon-pencil"></i> {{trans('general.pashto')}} </a>
                     </li>
                     <li>
-                        <a href="{{route('locale', 'da')}}">
+                        @if(auth('user')->check())
+                            <a href="{{route('locale' , 'da')  }}">
+                        @else
+                            <a href="{{route('teacher.locale' , 'da')  }}">
+                        @endif
                             <i class="icon-pencil"></i> {{trans('general.dari')}} </a>
                     </li>
                 </ul>

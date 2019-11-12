@@ -1,7 +1,5 @@
 <?php
 
-
-
 Route::get('/', function () {
     return redirect(route('teacher.noticeboard.index'));
 });
@@ -11,10 +9,10 @@ Route::group(['namespace' => 'Teacher'], function () {
     Route::post('login', 'Auth\LoginController@login')->name('teacher.login');
 });
 
-Route::group(['middleware' => 'auth:teacher', 'as' => 'teacher.'], function() {     
+    Route::group(['middleware' => 'auth:teacher', 'as' => 'teacher.'], function() {     
     Route::get('profile/password','ProfileController@index')->name('profile.password');
     Route::put('profile/password','ProfileController@store')->name('profile.password.store');
-
+    
     Route::group(['namespace' => 'Teacher'], function () {
         
         Route::resource('/noticeboard', 'NoticeboardController')
@@ -31,8 +29,13 @@ Route::group(['middleware' => 'auth:teacher', 'as' => 'teacher.'], function() {
         })->name('support');
     });
 
+    Route::get('/locale/{locale}', function ($locale) {
+        
+        \Session::put('locale' , $locale);
+
+        return redirect()->back();
+    })->name('locale');
+
     Route::post('timetable/course/{course}/scores', 'Course\ScoresController')->name('scores.store');
     Route::get('courses/{course}/scores-sheet', 'Course\ScoreSheetController@print')->name('course.scoresSheet.print');
-
-
 });
