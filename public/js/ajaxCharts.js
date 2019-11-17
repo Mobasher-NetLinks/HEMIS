@@ -1,7 +1,6 @@
 // this function is used to make an ajax call to get the students of a 
 // specific city in all universeties 
-function getCitySpecData(province, container) {
-
+function getCitySpecData(province, year, container) {
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -11,7 +10,7 @@ function getCitySpecData(province, container) {
         type: 'POST',
         url: '/cityupdate',
         data: {
-            pro: province
+            pro: province, year: year
         },
 
         success: function (data) {
@@ -36,7 +35,7 @@ function getUniSpecData(university, container) {
         type: 'POST',
         url: '/universityupdate',
         data: {
-            uni: university
+            uni: university, year: year
         },
 
         success: function (data) {

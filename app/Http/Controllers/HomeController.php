@@ -124,7 +124,6 @@ class HomeController extends Controller
 
 
     public function updateData(Request $request) {
-        
         // Check if the request is made to fetch province specific data
         if($request->pro) {
 
@@ -133,7 +132,7 @@ class HomeController extends Controller
             $provinceStudentsInUnis = Student::leftJoin('universities', 'universities.id', '=', 'university_id')
                 ->select('universities.name', \DB::raw('count(students.id) as std_count'))
                 ->where('province', $request->pro)
-                ->where('kankor_year', 1397)
+                ->where('kankor_year', $request->year)
                 ->orderBy('std_count', 'asc')
                 ->groupBy('universities.name')
                 ->withoutGlobalScopes()
@@ -153,7 +152,7 @@ class HomeController extends Controller
                 $uniStudentsFromProvinces = Student::leftJoin('provinces', 'provinces.id', '=', 'province')
                     ->select('provinces.name', \DB::raw('count(students.id) as std_count'))
                     ->where('university_id', $request->uni)
-                    ->where('kankor_year', 1397)
+                    ->where('kankor_year', $request->year)
                     ->orderBy('std_count', 'asc')
                     ->groupBy('provinces.name')
                     ->withoutGlobalScopes()

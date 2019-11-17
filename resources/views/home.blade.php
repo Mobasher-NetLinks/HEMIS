@@ -258,7 +258,7 @@
                         <h3 style="text-align: left">ولایت:</h3>   
                     </div>
                     <div class="col-md-3 col-sm-12" >
-                        <select name="cities" id="" class="form-control" style = "width: 80% !important; margin-top:16px;" onChange="getCitySpecData(this.value, 'university-specific')">
+                        <select name="cities" id="" class="form-control" style = "width: 80% !important; margin-top:16px;" onChange="getCitySpecData(this.value, {{$current_kankor_year}}, 'university-specific')">
                             @foreach($allProvinces as $province)
                             <option value="{{ $province->id }}">{{ $province->name }}</option>
                             @endforeach
@@ -349,7 +349,7 @@
                     <h3 style="text-align: left">پوهنتون:</h3>
                 </div>
                 <div class="col-md-3 col-sm-4">
-                    <select name="universities" id="" class="form-control" style="width: 80% !important; margin-top:16px;"onChange="getUniSpecData(this.value, 'province-specific')">
+                    <select name="universities" id="" class="form-control" style="width: 80% !important; margin-top:16px;"onChange="getUniSpecData(this.value, {{$current_kankor_year}}, 'province-specific')">
                         @foreach($allUniversities as $university)
                         <option value="{{ $university->id }}">{{ $university->name }}</option>
                         @endforeach
