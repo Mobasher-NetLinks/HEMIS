@@ -22,6 +22,7 @@ class StudentExports implements FromView
             'students.father_name',
             'students.grandfather_name',
             'students.gender',
+            'students.kankor_result',
             'provinces.name as province',
             'students.kankor_year',
             'students.kankor_score',
