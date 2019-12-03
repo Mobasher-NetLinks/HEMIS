@@ -61,6 +61,8 @@ class GroupsController extends Controller
 
         $group = Group::create([
             'name' => $request->name,
+            'kankor_year' => $request->kankor_year,
+            'semester' => $request->semester,
             'description' => $request->description,
             'department_id' => $request->department,
             'university_id' => $request->university
@@ -100,6 +102,8 @@ class GroupsController extends Controller
 
         $group->update([
             'name' => $request->name,
+            'kankor_year' => $request->kankor_year,
+            'semester' => $request->semester,
             'description' => $request->description,
             'department_id' => $request->department,
             'university_id' => $request->university

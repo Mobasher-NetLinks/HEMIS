@@ -50,7 +50,6 @@
                                         </div>
                                     </div>
                                     <hr>
-
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group {{ $errors->has('name') ? ' has-error' : '' }}">
@@ -60,6 +59,36 @@
                                                     @if ($errors->has('name'))
                                                         <span class="help-block">
                                                             <strong>{{ $errors->first('name') }}</strong>
+                                                        </span>
+                                                    @endif
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group {{ $errors->has('kankor_year') ? ' has-error' : '' }}">
+                                                {!! Form::label('kankor_year', trans('general.kankor_year'), ['class' => 'control-label col-sm-3']) !!}
+                                                <div class="col-sm-8">
+                                                    {!! Form::text('kankor_year', null, ['class' => 'form-control']) !!}
+                                                    @if ($errors->has('kankor_year'))
+                                                        <span class="help-block">
+                                                            <strong>{{ $errors->first('kankor_year') }}</strong>
+                                                        </span>
+                                                    @endif
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group {{ $errors->has('semester') ? ' has-error' : '' }}">
+                                                {!! Form::label('semester', trans('general.semester'), ['class' => 'control-label col-sm-3']) !!}
+                                                <div class="col-sm-8">
+                                                    {!! Form::text('semester', null, ['class' => 'form-control']) !!}
+                                                    @if ($errors->has('semester'))
+                                                        <span class="help-block">
+                                                            <strong>{{ $errors->first('semester') }}</strong>
                                                         </span>
                                                     @endif
                                                 </div>
