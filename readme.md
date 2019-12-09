@@ -68,3 +68,14 @@ Types of commit messages:
  * **test**: Adding missing tests or correcting existing tests
 
  What this guide effectively says is that, if your commit cannot be described sticking to this guideline, then there’s something wrong with the changes you have made i.e. you should not be committing the code without refining it, or the changes should be separated into multiple commits.
+ 
+ in order to setup HEMIS on your local computer, please follow the below steps.
+
+download and install XAMPP and composer on your computer.
+clone the project from GitHub.
+once you have done with the cloning from GitHub, type composer update in order to install all usage packages and dependencies.
+create a database in your local server, and import the HEMIS DATABASE.
+note: I will share the SQL format of the database. and please import the database from your command-line rather than from phpMyAdmin in order to take less time.
+configure .env file of the project according to your need.
+in case of any issue please do not hesitate to contact me
+ 
