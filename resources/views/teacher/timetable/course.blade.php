@@ -42,8 +42,12 @@
                                         @continue(! $course)                                      
                                         <div class="col-sm-3">
                                             <div class="panel panel-info">
+
                                                 <div class="panel-heading"> 
-                                                    <?= $course->subject->title ?> 
+                                                    @if(auth('teacher')->check())
+                                                    <a href="{{ route ('teacher.timetable.course.list', $course) }}">
+                                                    <?= $course->subject->title ?></a>
+                                                    @endif
                                                 </div>
                                                 <div class="panel-body">
                                                     <p><span class="font-blue">{{ trans('general.code') }}:</span> <span class="ltr"> <?= $course->code ?></span></p>
