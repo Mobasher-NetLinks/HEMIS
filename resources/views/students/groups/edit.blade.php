@@ -85,7 +85,7 @@
                                             <div class="form-group {{ $errors->has('semester') ? ' has-error' : '' }}">
                                                 {!! Form::label('semester', trans('general.semester'), ['class' => 'control-label col-sm-3']) !!}
                                                 <div class="col-sm-8">
-                                                    {!! Form::text('semester', null, ['class' => 'form-control']) !!}
+                                                    {!! Form::number('semester', null, ['class' => 'form-control']) !!}
                                                     @if ($errors->has('semester'))
                                                         <span class="help-block">
                                                             <strong>{{ $errors->first('semester') }}</strong>
