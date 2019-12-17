@@ -220,7 +220,13 @@
                    <h4>{{ trans('general.add_student_individually') }}</h4>
                 </div>
                 <div class="portlet-body">
-                    <!-- BEGIN FORM-->            
+                    <!-- BEGIN FORM-->   
+                    @if($errors->any())
+                    <div class="alert alert-info">
+                         <p>{{ $errors->first() ?? ""}}</p>
+                    </div>  
+                    @endif
+
                     {!! Form::open(['route' => ['attendance.student.add', $course], 'method' => 'post', 'class' => 'form-horizontal']) !!}
                         <div class="form-body" id="app">
                             <div class="row">

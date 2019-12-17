@@ -48,10 +48,15 @@ class AttendanceController extends Controller
 
     public function addStudent(Request $request, $course)
     {
+
         $request->validate([            
             'student_id' => 'required'
         ]);
-
+        
+        if($course->students->contains($request->student_id)){
+            
+            return redirect()->back()->withErrors([trans('general.student_exist_message')]);
+        }
         $course->students()->attach($request->student_id);   
 
         return redirect()->back();

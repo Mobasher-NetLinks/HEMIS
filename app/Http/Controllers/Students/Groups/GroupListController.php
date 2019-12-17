@@ -34,7 +34,7 @@ class GroupListController extends Controller
 
     public function addStudent(Request $request, $group)
     {
-      
+        
         if ($request->has('student_id')) {
 
             $request->validate([            

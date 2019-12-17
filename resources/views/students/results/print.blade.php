@@ -69,18 +69,18 @@
 </head>
 <body style="direction: rtl;">
 	<div>
-		<table class="header_table"  style="width:100%;">
+		<table class="header_table"  style="width:100%; padding-top:0%">
 			<tr>
-				<td style="text-align:left;width:30%;padding-left:17%;vertical-align:top;">
-					<img src="{{file_exists($university->photo_url) ? asset($university->photo_url) : asset('img/wezarat-logo.jpg') }}"  style="max-width: 80px"/>		
+				<td style="text-align:left;width:30%;padding-left:17%;">
+					<img src="{{$university->logo()}}" style="max-width: 80px"/>		
 				</td>
-				<td  style="text-align:center;width:40%;vertical-align:top;">
+				<td  style="text-align:center;width:40%;">
 				<p> <span style="font-size: 12px">{{trans('general.governament_title')}}</span></p>					
 				<p> <span style="font-size: 12px">{{trans('general.ministry_title')}}</span></p>					
 				<p>{{__('general.university_or_inistitute')}}: <span style="font-size: 12px">{{$university->name}}</span></p>	
 				<p> <span style="font-size: 12px">{{trans('general.student_affair_authority')}}</span></p>					
 				<p> <span style="font-size: 12px">{{__('general.faculty')}}: {{$department->name}}</span> <span style="font-size: 12px">{{__('general.department')}}: {{$department->name}}</span></p>					
-				<td style="text-align:right;width:17%;padding-left:0%;vertical-align:top;">
+				<td style="text-align:right;width:17%;padding-left:0%;">
 					<img src="{{ asset('img/wezarat-logo.jpg') }}"  style="max-width: 80px"/>		
 				</td>
 				<td style="text-align:right;width:10%;padding-right:1%; padding-left:1%; vertical-align:top;">
@@ -187,24 +187,31 @@
 							$courseScore = $course->getStudentScore($student->id);
 							if($courseScore){
 								if($courseScore->total >= 55){
+
 									$score = $courseScore->total;
 								}
 								elseif ($courseScore->validForChanceTwo()) {
 									
 									$score = $courseScore->chance_two;
 								}
-								else {
-
+								elseif ($courseScore->validForChanceThree()) {
+									
 									$score = $courseScore->chance_three;
 								}
-							}
+								else {
 
-							$totalScore =  ($score * $course->subject->credits) + $totalScore ;
+									$score = $courseScore->chance_four;
+								}
+							}
+							if(is_numeric($score)){
+								$totalScore =  ($score * $course->subject->credits) + $totalScore ;
+							}
 							$credits = $credits + $course->subject->credits;
 						?>
 						<td>{{$score ? $score : '' }}</td>
 						<td>{{ $score ? $score * $course->subject->credits : ''}}</td>
 					@endforeach
+					
 					<td>{{$credits ?  $credits : '' }}</td>
 					<td>{{$credits ?  $credits : ''}}</td>
 					<td>{{$totalScore ? $totalScore : '' }}</td>

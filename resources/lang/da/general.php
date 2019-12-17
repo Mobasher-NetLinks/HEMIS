@@ -455,4 +455,6 @@ return [
     'failled_students' => ' ناکام',
     'divested_students' => ' محروم',
     'university_or_inistitute' => ' پوهنتون/موسسه تحصیلی',
+    'student_exist_message' => 'محصل در صنف موجود میباشد',
+
 ];
