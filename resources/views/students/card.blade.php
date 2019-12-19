@@ -84,6 +84,9 @@
 			<div  style="float: left; clear: left; margin-left:73px; margin-top:6px; width: 160px;text-align: left">
 				{{ $student->form_no }}
 			</div>
+			<p style="float: left; clear: left; margin-left:2px; color:gray; font-weight: bold; font-family: Times New Roman, font-style: oblique margin-top:6px; width: 160px;text-align: left">
+				Expire Date: {{$student->kankor_year + 4 }} Year
+			</p>
 		</div>	
 	</body>
 </html>
