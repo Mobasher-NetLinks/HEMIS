@@ -281,7 +281,7 @@
 
 
 <script>
-@if((auth('teacher')->check() and auth('teacher')->user()->id == $course->teacher_id))
+@if((auth('teacher')->check() and auth('teacher')->user()->id == $course->teacher_id) and $course->active)
     var userCanSubmit = true;
 
     function submitScore (input, parent) 
