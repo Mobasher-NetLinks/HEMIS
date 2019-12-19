@@ -10,7 +10,7 @@
             <div class="portlet light profile-sidebar-portlet bordered">
                 <!-- SIDEBAR USERPIC -->
                 <div class="profile-userpic"> 
-                    @if($student->photo_url)                   
+                    @if($student->photo_url and \Storage::exists($student->photo_url))                   
                         <a href="{{ auth()->user()->can('update-student-photo') ? route('students.photo', $student) : "#" }}">
                             <img src="{{ asset($student->photo_url) }}" class="img-responsive" alt=""> 
                         </a>
