@@ -108,13 +108,10 @@ class StudentsDataTable extends DataTable
                 $query->where('universities.name', 'like', "%".$input['columns'][7]['search']['value']."%");
 
             if (isset($input['columns'][8]['search']['value']) and $input['columns'][8]['search']['value'] != '')
-                $query->where('universities.name', 'like', "%".$input['columns'][8]['search']['value']."%");
+                $query->where('kankor_year', 'like', "%".$input['columns'][8]['search']['value']."%");
 
             if (isset($input['columns'][9]['search']['value']) and $input['columns'][9]['search']['value'] != '')
-                $query->where('kankor_year', 'like', "%".$input['columns'][9]['search']['value']."%");
-            
-            if (isset($input['columns'][10]['search']['value']) and $input['columns'][10]['search']['value'] != '')
-                $query->where('grades.name', 'like', "%".$input['columns'][10]['search']['value']."%");
+                $query->where('grades.name', 'like', "%".$input['columns'][9]['search']['value']."%");
            
         return $query;
     }
