@@ -14,8 +14,7 @@
             <div class="tools"> </div>
         </div>
         <div class="portlet-body">
-        
-        {!! $dataTable->table() !!}
+            {!! $dataTable->table([], true) !!}
         </div>
     </div>
 @endsection
