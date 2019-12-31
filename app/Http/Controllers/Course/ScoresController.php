@@ -19,7 +19,9 @@ class ScoresController extends Controller
             ], 400);
         }
 
-        $validator = \Validator::make($request->all(), [            
+        $validator = \Validator::make($request->all(), [ 
+            'present' => 'nullable|between:0,99.99|min:0|max:20',
+            'absent' => 'nullable|between:0,99.99|min:0|max:20',
             'homework' => 'nullable|between:0,99.99|min:0|max:20|required_without_all:classwork,midterm,final,chance_two,chance_three,chance_four',
             'classwork' => 'nullable|between:0,99.99|min:0|max:20',
             'midterm' => 'nullable|between:0,99.99|min:0|max:30',
@@ -44,12 +46,13 @@ class ScoresController extends Controller
         }
         
         $score = Score::find($request->id);
-
         $data = [
             'student_id' => $request->get('student_id'), 
             'course_id' => $request->get('course_id'),       
             'subject_id' => $request->get('subject_id'),
             'semester' => $request->get('semester'),            
+            'present' => $request->get('present'),            
+            'absent' => $request->get('absent'),            
             'homework' => $request->get('homework') != '' ? $request->get('homework') : null,
             'classwork' => $request->get('classwork') != '' ? $request->get('classwork') : null,
             'midterm' => $request->get('midterm') != '' ? $request->get('midterm') : null,
@@ -77,6 +80,8 @@ class ScoresController extends Controller
             'success' => true, 
             'id' => ($score and $score->deleted_at == NULL) ? $score->id : NULL,
             'total' => ($score and $score->deleted_at == NULL) ? $score->total : NULL,
+            'present' => $score->present,
+            'absent' => $score->absent
         ], 200);
     }
 }

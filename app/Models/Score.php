@@ -78,5 +78,10 @@ class Score extends Model
         if($this->chance_three != null){
         return $this->chance_three !== null and $this->chance_three < 55 ;  
         }                  
-    }        
+    } 
+    
+    public function isDeprived(){
+
+        return $this->present % 25 < $this->absent;
+    }
 }

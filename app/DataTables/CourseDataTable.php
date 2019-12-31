@@ -98,16 +98,16 @@ class CourseDataTable extends DataTable
                 $query->where('courses.semester', 'like', "%".$input['columns'][3]['search']['value']."%");
 
             if (isset($input['columns'][4]['search']['value']) and $input['columns'][4]['search']['value'] != '')
-                $query->where('subjects.subject', 'like', "%".$input['columns'][4]['search']['value']."%");
+                $query->where('subjects.title', 'like', "%".$input['columns'][4]['search']['value']."%");
 
             if (isset($input['columns'][5]['search']['value']) and $input['columns'][5]['search']['value'] != '')
                 $query->where('teachers.name', 'like', "%".$input['columns'][5]['search']['value']."%");
 
             if (isset($input['columns'][6]['search']['value']) and $input['columns'][6]['search']['value'] != '')
-                $query->where('universities.name', 'like', "%".$input['columns'][6]['search']['value']."%");
+                $query->where('departments.name', 'like', "%".$input['columns'][6]['search']['value']."%");
 
             if (isset($input['columns'][7]['search']['value']) and $input['columns'][7]['search']['value'] != '')
-                $query->where('departments.name', 'like', "%".$input['columns'][7]['search']['value']."%");
+                $query->where('universities.name', 'like', "%".$input['columns'][7]['search']['value']."%");
 
            
         return $query;
@@ -146,7 +146,7 @@ class CourseDataTable extends DataTable
                                 var onEvent = 'change';
                                                                                                                     
                                 if(this.index() >= 0 && this.index() <= 7) { 
-                                    if (this.index() == 0 || this.index() == 6) {
+                                    if (this.index() == 0 || this.index() == 7) {
                                         $('<input class=\"datatable-footer-input ltr \" placeholder=\"'+$(column.header()).text()+'\" name=\"'+ column.index() + '\" value=\"'+ (state ? state.columns[this.index()].search.search : emptyValue) +'\" />').attr('size',10).appendTo($(column.footer()).empty())                                        
                                         .on(onEvent, function () {
                                             column.search($(this).val(), false, false, true).draw();
@@ -175,7 +175,7 @@ class CourseDataTable extends DataTable
         return [
             'code'     => ['title' => trans('general.code')],
             'year'     => ['title' => trans('general.year')],
-            'half_year'     => ['title' => trans('general.half_year')],
+            'half_year'   => [ 'value' => trans('general.' . 'half_year'),'title' => trans('general.half_year')],
             'semester'     => ['title' => trans('general.semester')],
             'subject'     => [ 'name' => 'subjects.title', 'title' => trans('general.subject')],
             'teacher'     => [ 'name' => 'teachers.name', 'title' => trans('general.teacher')],

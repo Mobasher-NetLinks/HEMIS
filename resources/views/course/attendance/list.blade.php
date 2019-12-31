@@ -135,6 +135,8 @@
                             <th>{{ trans('general.name') }}</th>
                             <th>{{ trans('general.father_name') }}</th>
                             <th>{{ trans('general.kankor_year') }}</th>
+                            <th>{{ trans('general.the_amount_of_present') }}</th>
+                            <th>{{ trans('general.absent') }}</th>
                             <th>{{ trans('general.homework') }}</th>
                             <th>{{ trans('general.classwork') }}</th>
                             <th>{{ trans('general.midterm') }}</th>
@@ -153,7 +155,7 @@
                             $score = $student->scores->first();
                         @endphp         
 
-                            <tr class="{{ ! optional($score)->passed ? 'danger' : '' }}">
+                             <tr class="{{ ! optional($score)->passed ? 'danger' : '' }}" >
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $student->form_no }}</td>
                                 <td>{{ $student->name }}</td>
@@ -162,7 +164,14 @@
                                 <td>
                                     <input type="hidden" class="score-input" name="id" value="{{ $score->id ?? ''  }}">
                                     <input type="hidden" class="score-input" name="student_id" value="{{ $student->id }}">
-                                    <input type="number" class="form-control score-input" name="homework" min="0" max="10" value="{{ $score->homework ?? ''  }}">
+                                    <input type="hidden" value="{{$score->isDeprived() ? '1' : '0'}}" class = "is-deprived">
+                                    <input type="number" step="0.01" class="form-control score-input" name="present" disabled min="0" max="40" value="{{  $course->subject->credits * 16 ?? ''  }}">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control score-input" name="absent" min="0" max="10" value="{{ $score->absent ?? ''  }}">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control score-input" name="homework" min="0" max="40" value="{{ $score->homework ?? ''  }}">
                                 </td>
                                 <td>
                                     <input type="number" step="0.01" class="form-control score-input" name="classwork" min="0" max="10" value="{{ $score->classwork ?? ''  }}">
@@ -174,7 +183,7 @@
                                     <input type="number" step="0.01" class="form-control score-input" name="final" min="0" max="60" value="{{ $score->final ?? ''  }}">
                                 </td>
                                 <td style="vertical-align: middle" class="total">
-                                    {{ $score->total ?? ''  }}
+                                    {{  ! $score->isDeprived()  ? $score->total : 'محروم'  }}
                                 </td>  
                                 <td>
                                     <input type="number" step="0.01" class="form-control score-input" name="chance_two" min="0" max="100" value="{{ $score->chance_two ?? ''  }}">
@@ -281,7 +290,8 @@
 
 
 <script>
-@if((auth('teacher')->check() and auth('teacher')->user()->id == $course->teacher_id) and $course->active)
+
+@if((auth('teacher')->check() and auth('teacher')->user()->id == $course->teacher_id) and $course->active == true)
     var userCanSubmit = true;
 
     function submitScore (input, parent) 
@@ -302,21 +312,26 @@
         formData['course_id'] = {!! $course->id !!}
         formData['subject_id'] = {!! $course->subject_id !!}
         formData['semester'] = {!! $course->semester !!}
-        console.log(formData);
+        // console.log(formData);
         $.ajax({
             type        : 'POST', 
             url         : '{{ auth("teacher")->check() ? route("teacher.scores.store", $course) : route("scores.store", $course) }}', 
             data        : formData, 
             dataType    : 'json',
             encode      : true
-        }).done(function(result) {                
+        }).done(function(result) {  
             loading.removeClass("spinner");
 
             userCanSubmit = true;
             tr.find("input[name='id']").val(result.id);
-            tr.find(".total").html(result.total);              
-            if(result.success) {                    
-                success.removeClass("hide");            
+            if(result.present % 25 < result.absent){
+                tr.find(".total").html('محروم');              
+            }
+            else{
+                tr.find(".total").html(result.total);              
+            }
+            if(result.success) {  
+                success.removeClass("hide");
             } else {
                 failed.removeClass("hide");         
             }
@@ -342,11 +357,19 @@
             if (e.which == 13 && userCanSubmit) {
                 userCanSubmit = false;
                 submitScore($(this), $(this).parent().parent());
-
             }
         });
-    })
+    });
+
+    // $('.table tr').each(function(index, element) {
+    //     const isDeprived = $(element).find('.is-deprived').val(); 
+    //     if(isDeprived === '1') {
+    //         $(element).find('input').attr('disabled', 'disabled');
+    //     }
+    //     console.log($(element).find('.is-deprived').val());
+    // });
 @else
+
     $('.score-input').attr('disabled', 'disabled');
 @endif
 </script>

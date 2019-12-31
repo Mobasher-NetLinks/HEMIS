@@ -251,13 +251,14 @@ return [
 
     'homework' => 'کار خانگی 10%',
     'classwork' => 'فعالیت صنفی  10%',
-    'midterm' => ' امتحان وسط سمستر 20%',
+    'midterm' => ' امتحان وسط 20%',
     'final' => 'امتحان فاینل  60%',
     'total' => 'مجموع  100%',
     'chance_two' => 'چانس دو  100%',
     'chance_three' => ' چانس سه 100%',
     'chance_four' => ' چانس چهار 100%',
     'save_scores' => 'ثبت نمرات',
+    'deprived' => 'محروم',
 
     
     'print_attendance' => 'پرینت حاضری',
@@ -456,5 +457,6 @@ return [
     'divested_students' => ' محروم',
     'university_or_inistitute' => ' پوهنتون/موسسه تحصیلی',
     'student_exist_message' => 'محصل در صنف موجود میباشد',
+    'the_amount_of_present' => 'مقدار ساعت ها'
 
 ];

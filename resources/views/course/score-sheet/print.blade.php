@@ -65,6 +65,9 @@
 					<td colspan="{{ ($request->chance == 1) ? 5 : 1 }}">
 						نمرات  
 					</td>
+					<td style="width:100px"  colspan="2">
+						حاضری
+					</td>
 					<td width="100" rowspan="2">
 						ملاحظات
 					</td>
@@ -101,6 +104,12 @@
 						مجموع نمرات 
 						<br>
 						100%
+					</td> 
+					<td style="width:100px">
+						مجموع روزهای حاضری 
+					</td> 
+					<td style="width:100px">
+						مجموع غیر حاضر 
 					</td> 
 					@elseif($request->chance == 2)
 					<td>چانس دو</td>
@@ -145,7 +154,6 @@
 
 					$passed += $score->passed ?? 0;
 				@endphp
-
 				<tr>
 					<td>
 						{{ ++$i }}
@@ -179,9 +187,19 @@
 					</td>
 					<td>
 						@if($request->withScores == 1)
-						{{ $score->total ?? '' }}
+						{{ !$score->isDeprived() ? $score->total : 'محروم' }}
 						@endif
-					</td>					
+					</td>
+					<td>
+						@if($request->withScores == 1)
+						{{ $score->present ?? '' }}
+						@endif
+					</td>
+					<td>
+						@if($request->withScores == 1)
+						{{ $score->absent ?? '' }}
+						@endif
+					</td>				
 					@elseif($request->chance == 2)
 					<td>
 						@if($request->withScores == 1)
@@ -202,8 +220,8 @@
 					</td>
 					@endif
 					<td>
-					</dt>											
-				</tr>    
+					</td>											
+				</tr>   
 				@endforeach
 			</tbody>			
 		</table>
