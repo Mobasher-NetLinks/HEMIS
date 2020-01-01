@@ -164,7 +164,9 @@
                                 <td>
                                     <input type="hidden" class="score-input" name="id" value="{{ $score->id ?? ''  }}">
                                     <input type="hidden" class="score-input" name="student_id" value="{{ $student->id }}">
+                                    @if($score)
                                     <input type="hidden" value="{{$score->isDeprived() ? '1' : '0'}}" class = "is-deprived">
+                                    @endif
                                     <input type="number" step="0.01" class="form-control score-input" name="present" disabled min="0" max="40" value="{{  $course->subject->credits * 16 ?? ''  }}">
                                 </td>
                                 <td>
@@ -182,9 +184,15 @@
                                 <td>
                                     <input type="number" step="0.01" class="form-control score-input" name="final" min="0" max="60" value="{{ $score->final ?? ''  }}">
                                 </td>
+                                @if($score)
                                 <td style="vertical-align: middle" class="total">
                                     {{  ! $score->isDeprived()  ? $score->total : 'محروم'  }}
-                                </td>  
+                                </td> 
+                                @else
+                                <td style="vertical-align: middle" class="total">
+                                    {{  $score->total ??  ''  }}
+                                </td> 
+                                @endif 
                                 <td>
                                     <input type="number" step="0.01" class="form-control score-input" name="chance_two" min="0" max="100" value="{{ $score->chance_two ?? ''  }}">
                                 </td>
