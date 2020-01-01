@@ -9,11 +9,13 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Activitylog\Traits\CausesActivity;
+use Yadahan\AuthenticationLog\AuthenticationLogable;
+
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class Teacher extends Authenticatable
 {
-    use SoftDeletes, Notifiable, UseByUniversity, CausesActivity;
+    use SoftDeletes, Notifiable, UseByUniversity, CausesActivity, AuthenticationLogable;
 
     protected $guarded = [];
     protected $dates = ['deleted_at'];

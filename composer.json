@@ -20,6 +20,7 @@
         "pusher/pusher-php-server": "^3.2",
         "spatie/laravel-activitylog": "^3.5",
         "spatie/laravel-permission": "^2.15",
+        "yadahan/laravel-authentication-log": "^1.2",
         "yajra/laravel-datatables-buttons": "^4.0",
         "yajra/laravel-datatables-oracle": "~9.0"
     },

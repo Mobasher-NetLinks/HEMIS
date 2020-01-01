@@ -9,11 +9,12 @@ use Illuminate\Notifications\Notifiable;
 use Lab404\Impersonate\Models\Impersonate;
 use Spatie\Activitylog\Traits\CausesActivity;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Yadahan\AuthenticationLog\AuthenticationLogable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    use Notifiable, SoftDeletes, HasRoles, Impersonate, CausesActivity;
+    use Notifiable, SoftDeletes, HasRoles, Impersonate, CausesActivity, AuthenticationLogable;
 
     /**
      * The attributes that are mass assignable.
