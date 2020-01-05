@@ -10,14 +10,16 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Activitylog\Traits\CausesActivity;
 use Yadahan\AuthenticationLog\AuthenticationLogable;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class Teacher extends Authenticatable
 {
-    use SoftDeletes, Notifiable, UseByUniversity, CausesActivity, AuthenticationLogable;
+    use SoftDeletes, Notifiable, UseByUniversity, CausesActivity, AuthenticationLogable, LogsActivity;
 
     protected $guarded = [];
+    protected static $logUnguarded = true;
     protected $dates = ['deleted_at'];
     
     protected $hidden = [
@@ -59,5 +61,10 @@ class Teacher extends Authenticatable
     public function noticeboardVisits()
     {
         return $this->morphMany(NoticeboardVisit::class, 'visitable');
+    }
+    
+    public function getDescriptionForEvent(string $eventName): string
+    {
+        return $this->full_name . " " . trans('general.'. $eventName);
     }
 }
