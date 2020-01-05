@@ -186,7 +186,7 @@
 						@endif
 					</td>
 					<td>
-						@if($request->withScores == 1)
+						@if($request->withScores == 1 and $score)
 						{{ !$score->isDeprived() ? $score->total : 'محروم' }}
 						@endif
 					</td>

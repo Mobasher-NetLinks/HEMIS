@@ -22,7 +22,7 @@ class ScoresController extends Controller
         $validator = \Validator::make($request->all(), [ 
             'present' => 'nullable|between:0,99.99|min:0|max:20',
             'absent' => 'nullable|between:0,99.99|min:0|max:20',
-            'homework' => 'nullable|between:0,99.99|min:0|max:20|required_without_all:classwork,midterm,final,chance_two,chance_three,chance_four',
+            'homework' => 'nullable|between:0,99.99|min:0|max:20|required_without_all:present,absent,classwork,midterm,final,chance_two,chance_three,chance_four',
             'classwork' => 'nullable|between:0,99.99|min:0|max:20',
             'midterm' => 'nullable|between:0,99.99|min:0|max:30',
             'final' => 'nullable|between:0,99.99|min:0|max:100', 
