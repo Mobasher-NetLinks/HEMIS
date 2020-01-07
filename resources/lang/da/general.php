@@ -457,6 +457,8 @@ return [
     'divested_students' => ' محروم',
     'university_or_inistitute' => ' پوهنتون/موسسه تحصیلی',
     'student_exist_message' => 'محصل در صنف موجود میباشد',
-    'the_amount_of_present' => 'مقدار ساعت ها'
+    'the_amount_of_present' => 'مقدار ساعت ها',
+    'with_code' => ' صنف با کود نمبر ',
+
 
 ];

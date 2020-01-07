@@ -6,12 +6,14 @@ use App\Traits\UseByUniversity;
 use App\Traits\UseByDepartment;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class Course extends Model
 {
-    use SoftDeletes, UseByUniversity, UseByDepartment;
+    use SoftDeletes, UseByUniversity, UseByDepartment, LogsActivity;
 
     protected $guarded = [];
+    protected static $logUnguarded = true;
     protected $dates = ['deleted_at'];
     public $casts = ['groups' => 'array'];
 
@@ -83,5 +85,10 @@ class Course extends Model
                 $scores->courseId($this->id);
             }]);
         }]);
+    }
+
+    public function getDescriptionForEvent(string $eventName): string
+    {
+        return " ' " . $this->code . " ' " . trans('general.with_code') . "" .  trans('general.'. $eventName);
     }
 }
