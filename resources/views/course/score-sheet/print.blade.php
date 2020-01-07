@@ -65,9 +65,11 @@
 					<td colspan="{{ ($request->chance == 1) ? 5 : 1 }}">
 						نمرات  
 					</td>
+					@if($request->chance ==1)
 					<td style="width:100px"  colspan="2">
 						حاضری
 					</td>
+					@endif
 					<td width="100" rowspan="2">
 						ملاحظات
 					</td>
