@@ -6,14 +6,16 @@ use Carbon\Carbon;
 use App\Traits\Attachable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
+use Spatie\Activitylog\Traits\LogsActivity;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Issue extends Model
 {
-    use SoftDeletes,Attachable;
+    use SoftDeletes, Attachable, LogsActivity ;
 
     protected $table = "issues";
     protected $guarded = [];
+    protected static $logUnguarded = true;
 
     public function date()
     {
@@ -34,6 +36,11 @@ class Issue extends Model
     public function isOwner()
     {
         return auth()->user()->id == $this->user_id;
+    }
+
+    public function getDescriptionForEvent(string $eventName): string
+    {
+        return  trans('general.issue') . " " . trans('general.'. $eventName);
     }
 
 }
