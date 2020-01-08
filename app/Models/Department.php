@@ -6,12 +6,14 @@ use App\Traits\UseByUniversity;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class Department extends Model
 {
-    use SoftDeletes, UseByUniversity;
+    use SoftDeletes, UseByUniversity, LogsActivity;
 
     protected $guarded = [];
+    protected static $logUnguarded = true;
     protected $dates = ['deleted_at'];
 
     protected static function boot()
@@ -32,6 +34,11 @@ class Department extends Model
     public function users()
     {
         return $this->belongsToMany(\App\User::class)->withTimestamps();
+    }
+
+    public function university(){
+
+        return $this->belongsTo(\App\Models\University::class);
     }
 
     public function students()
@@ -61,6 +68,10 @@ class Department extends Model
     public function group()
     {
         return $this->hasMany(\App\Models\Group::class);
+    }
+    public function getDescriptionForEvent(string $eventName): string
+    {
+        return  trans('general.department') . " "  .  trans('general.university')   . " ' " . $this->university->name . " ' " . trans('general.'. $eventName);
     }
 
 }
