@@ -209,6 +209,7 @@ return [
 
     'subjects' => 'مضامین',
     'curriculum' => 'کریکلم',
+    'only_subject' => 'مضمون',
 
     'subjects_list' => 'لیست مضامین',
     'create_subject' => 'مضمون جدید',
