@@ -6,13 +6,15 @@ use App\Traits\UseByUniversity;
 use App\Traits\UseByDepartment;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
+use Spatie\Activitylog\Traits\LogsActivity;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Group extends Model
 {
-    use SoftDeletes, UseByUniversity, UseByDepartment;
+    use SoftDeletes, UseByUniversity, UseByDepartment, LogsActivity;
 
     protected $guarded = [];
+    protected static $logUnguarded = true;
 
     public function students()
     {
@@ -31,6 +33,11 @@ class Group extends Model
     public function loadStudents()
     {
         return $this->load('students');
+    }
+
+     public function getDescriptionForEvent(string $eventName): string
+    {
+        return  trans('general.group') . " "  .  trans('general.department')   . " ' " . $this->department->name . " ' " . trans('general.'. $eventName);
     }
     
 }
