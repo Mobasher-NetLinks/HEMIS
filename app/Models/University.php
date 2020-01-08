@@ -2,13 +2,14 @@
 namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class University extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, LogsActivity;
 
     protected $guarded = [];
-    
+    protected static $logUnguarded = true;
     protected $dates = ['deleted_at'];
     
     public function departments()
@@ -34,5 +35,10 @@ class University extends Model
         } 
 
         return asset("img/wezarat-logo.jpg");
+    }
+    
+    public function getDescriptionForEvent(string $eventName): string
+    {
+        return  trans('general.university')   . " ' " . $this->name . " ' " . trans('general.'. $eventName);
     }
 }
