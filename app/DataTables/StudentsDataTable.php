@@ -31,7 +31,7 @@ class StudentsDataTable extends DataTable
                 if (auth()->user()->can('edit-student') and $student->editable) {
                     $html .= '<a href="'.route('students.edit', $student).'" class="btn btn-success btn-xs" target="new"><i class="icon-pencil"></i></a>';
                     
-                    if ($student->status_id < 2) {
+                    if ($student->status_id >= 2) {
                         $html .= '<form action="'. route('students.updateStatus', $student) .'" method="post" style="display:inline">
                                 <input type="hidden" name="_method" value="patch" />
                                 <input type="hidden" name="_token" value="'.csrf_token().'" />
