@@ -9,12 +9,14 @@ use App\Traits\UseByDepartment;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class Student extends Model
 {
-    use SoftDeletes, UseByUniversity, UseByDepartment, UseByGrade, Downloadble;
+    use SoftDeletes, UseByUniversity, UseByDepartment, UseByGrade, Downloadble, LogsActivity;
 
     protected $guarded = [];
+    protected static $logUnguarded = true;
     protected $dates = ['deleted_at'];
 
 
@@ -80,5 +82,10 @@ class Student extends Model
     public function group()
     {
         return $this->belongsTo(Group::class);
+    }
+
+    public function getDescriptionForEvent(string $eventName): string
+    {
+        return   $this->full_name . " ' " . trans('general.'. $eventName);
     }
 }
