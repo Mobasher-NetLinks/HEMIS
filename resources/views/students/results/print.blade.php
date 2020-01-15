@@ -26,9 +26,9 @@
 		}
 		@page {
 			size: auto;   /* auto is the initial value */
-			margin:4cm  4% 4cm 2%;
-			margin-header: 2mm; 
-			margin-footer: 5mm;
+			/* margin:4cm  4% 4cm 2%; */
+			margin-header: 0mm; 
+			margin-footer: 0mm;
 			/* header: html_myHeader;
 			footer: html_myFooter; */
 
@@ -67,8 +67,8 @@
 	}
 	</style>
 </head>
-<body style="direction: rtl;">
-	<div>
+<body style="direction: rtl; ">
+	<div style="color:red;">
 		<table class="header_table"  style="width:100%; padding-top:0%">
 			<tr>
 				<td style="text-align:left;width:30%;padding-left:17%;">
@@ -121,7 +121,7 @@
 				</td>	
 			</tr>
 		</table>
-		<div style="border: darkgrey solid 2px; width:60% text-align:right;background-color:cornsilk; padding:4px">
+		<div style="border: darkgrey solid 2px; width:60% text-align:right;background-color:cornsilk; padding:1px">
 			<p> <span style="font-size: 16px; font-wdith :bold">{{trans('general.credit_base_result_table')}} - {{trans('general.semester')}} {{$semester}}
 				&nbsp;&nbsp; &nbsp;&nbsp; {{trans('general.class_year')}}2. &nbsp;&nbsp; &nbsp;&nbsp; .{{trans('general.department')}}{{$department->name}}.&nbsp;&nbsp; &nbsp;&nbsp; {{trans('general.year')}}{{$year}} </span></p>								
 		</div>
@@ -164,7 +164,6 @@
 			@php
 				$credits = 0;
 				$totalScore = 0;
-				$score = "";
 				$courses = null;
 			@endphp
 			@foreach($students as $student)
@@ -189,23 +188,31 @@
 								if($courseScore->total >= 55){
 
 									$score = $courseScore->total;
+									$scoreToCount = $score;
 								}
 								elseif ($courseScore->validForChanceTwo()) {
 									
-									$score = $courseScore->chance_two;
+									$chanceScore = $courseScore->chance_two;
+									$scoreToCount = $chanceScore;
 								}
 								elseif ($courseScore->validForChanceThree()) {
 									
-									$score = $courseScore->chance_three;
+									$chanceScore = $courseScore->chance_three;
+									$scoreToCount = $chanceScore;
+
 								}
 								else {
 
-									$score = $courseScore->chance_four;
+									$chanceScore = $courseScore->chance_four;
+									$scoreToCount = $chanceScore;
+
 								}
 							}
-							if(is_numeric($score)){
-								$totalScore =  ($score * $course->subject->credits) + $totalScore ;
+							if($scoreToCount){
+
+								$totalScore = ($scoreToCount * $course->subject->credits) + $totalScore;
 							}
+							
 							$credits = $credits + $course->subject->credits;
 						?>
 						<td>{{$score ? $score : '' }}</td>
@@ -227,10 +234,11 @@
 					<td>2</td>
 					@foreach($courses as $course)
 						<?php
+							$score = null;
 							$courseScore = $course->getStudentScore($student->id);
 							if($courseScore){
 								if($courseScore->validForChanceTwo()){
-									$score = $courseScore->total;
+									$score = $courseScore->chance_two;
 								}
 								else {
 									$score = null;
@@ -256,10 +264,11 @@
 					<td>3</td>
 					@foreach($courses as $course)
 						<?php
+							$score = null;
 							$courseScore = $course->getStudentScore($student->id);
 							if($courseScore){
 								if($courseScore->validForChanceThree()){
-									$score = $courseScore->total;
+									$score = $courseScore->chance_three;
 								}
 								else {
 									$score = null;
@@ -284,7 +293,6 @@
 			@php
 				$credits = 0;
 				$totalScore = 0;
-				$score = "";
 				$courses = null;
 			@endphp
 			@endforeach
