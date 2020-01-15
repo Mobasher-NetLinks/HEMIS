@@ -3,6 +3,7 @@
 		<style>
 			td, th, p, div, span {
 				font-family: 'nazanin';
+				font-size: 14px;
 			}
 			.table td,.table th{
 				border:1px solid #aaa;
@@ -35,7 +36,7 @@
 				<tr>	
 					<td style="text-align:right;width:33%">
 						<h3>وزارت تحصیلات عالی</h3>
-						<h3>پوهنتون {{ $course->department->university->name }}</h3>
+						<h3>پوهنتون {{ $course->department->university->name }} {{trans('general.faculty')}} {{$course->department->faculty }}</h3>
 						<h3>دیپارتمنت {{ $course->department->name }}</h3>	
 					</td>
 					<td style="text-align:center; width:33%;">
