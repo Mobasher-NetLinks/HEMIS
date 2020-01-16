@@ -150,6 +150,7 @@
 					
 					if ($request->chance == 4 and $score and $score->validForChanceFour()) {
 						$valid = true;
+						
 					}						
 
 					if(! $valid)
@@ -157,7 +158,11 @@
 
 					$passed += $score->passed ?? 0;
 				@endphp
+				@if($score and $score->passed == 0)
+				<tr style="background-color: gray">
+				@else
 				<tr>
+				@endif
 					<td>
 						{{ ++$i }}
 					</td>
