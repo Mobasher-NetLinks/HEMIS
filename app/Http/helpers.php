@@ -153,8 +153,14 @@ function getGrade($score)
   elseif($score >= 80 and $score <= 89){
     return 'B';
   }
+  elseif ($score >= 70 and $score <= 79) {
+    return 'C';
+  }
+  elseif($score >= 55 and $score <= 79){
+      return 'D';
+  }
   else{
-      return 'C';
+      return "";
   }
 }
 
