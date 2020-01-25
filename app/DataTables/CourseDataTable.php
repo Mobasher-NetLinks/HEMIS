@@ -74,7 +74,7 @@ class CourseDataTable extends DataTable
                 'subjects.title as subject',
                 'teachers.name as teacher',
                 'universities.name as university',
-                'departments.name as department'
+                \DB::raw('CONCAT(departments.name, " ... ", departments.faculty) as department')
             )
             ->leftJoin('subjects', 'subjects.id', '=', 'courses.subject_id')
             ->leftJoin('teachers', 'teachers.id', '=', 'courses.teacher_id')
