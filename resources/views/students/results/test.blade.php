@@ -11,7 +11,7 @@
 			font: 12px;
 		}
 		.table td,.table th{
-			border:0.5px solid #aaa;
+			border:1px solid #aaa;
 			padding:1px 0;
 			text-align:center;
 			font-size:12px;
@@ -36,7 +36,7 @@
 		
 	.table td,.table th{	    
 	    padding:1px 1px; 	        
-		border: 0.5px solid #000;
+		border: 1px solid #000;
 	}
 	.inner-table tr:first-child td, .inner-table tr:first-child th {
 		border-top: 0
@@ -164,8 +164,6 @@
 			@php
 				$credits = 0;
 				$totalScore = 0;
-				$score = "";
-				$chance_score = 0;
 				$courses = null;
 			@endphp
 			@foreach($students as $student)
@@ -186,33 +184,40 @@
 					@foreach($courses as $course)
 						<?php
 							$courseScore = $course->getStudentScore($student->id);
+							$score = null;
 							if($courseScore){
 								if($courseScore->total >= 55){
 
 									$score = $courseScore->total;
+									$scoreToCount = $score;
 								}
 								elseif ($courseScore->validForChanceTwo()) {
 									
-									$chance_score = $courseScore->chance_two;
+									$chanceScore = $courseScore->chance_two;
+									$scoreToCount = $chanceScore;
 								}
 								elseif ($courseScore->validForChanceThree()) {
 									
-									$chance_score = $courseScore->chance_three;
+									$chanceScore = $courseScore->chance_three;
+									$scoreToCount = $chanceScore;
+
 								}
 								else {
 
-									$chance_score = $courseScore->chance_four;
-									 
+									$chanceScore = $courseScore->chance_four;
+									$scoreToCount = $chanceScore;
+
 								}
 							}
-							if(is_numeric($score)){
-								$totalScore = $score ? ($score * $course->subject->credits) + $totalScore : ($chance_score * $course->subject->credits) + $totalScore;
+							if($scoreToCount){
+
+								$totalScore = ($scoreToCount * $course->subject->credits) + $totalScore;
 							}
+							
 							$credits = $credits + $course->subject->credits;
 						?>
-						<td>{{$score ? $score : '' }}</td>
+						<td>{{ $score ? $score : '' }}</td>
 						<td>{{ $score ? $score * $course->subject->credits : ''}}</td>
-					
 					@endforeach
 					
 					<td>{{$credits ?  $credits : '' }}</td>
@@ -230,21 +235,21 @@
 					<td>2</td>
 					@foreach($courses as $course)
 						<?php
-							$chanceTwo = "";
+							$score = null;
 							$courseScore = $course->getStudentScore($student->id);
 							if($courseScore){
 								if($courseScore->validForChanceTwo()){
-									$chanceTwo = $courseScore->chance_two;
+									$score = $courseScore->chance_two;
 								}
 								else {
-									$chanceTwo = null;
+									$score = null;
 								}
 							}
-							$totalScore =  ($chanceTwo * $course->subject->credits) + $totalScore ;
+							$totalScore =  ($score * $course->subject->credits) + $totalScore ;
 							$credits = $credits + $course->subject->credits;
 						?>
-						<td >{{$chanceTwo ? $chanceTwo : '' }}</td>
-						<td >{{ $chanceTwo ? $chanceTwo * $course->subject->credits : ''}}</td>
+						<td >{{	$score ? $score : '' }}</td>
+						<td >{{ $score ? $score * $course->subject->credits : ''}}</td>
 					@endforeach
 					<td></td>
 					<td></td>
@@ -260,21 +265,21 @@
 					<td>3</td>
 					@foreach($courses as $course)
 						<?php
-							$chanceThree = "";
+							$score = null;
 							$courseScore = $course->getStudentScore($student->id);
 							if($courseScore){
 								if($courseScore->validForChanceThree()){
-									$chanceThree = $courseScore->chance_three;
+									$score = $courseScore->chance_three;
 								}
 								else {
-									$chanceThree = null;
+									$score = null;
 								}
 							}
-							$totalScore =  ($chanceThree * $course->subject->credits) + $totalScore ;
+							$totalScore =  ($score * $course->subject->credits) + $totalScore ;
 							$credits = $credits + $course->subject->credits;
 						?>
-						<td >{{$chanceThree ? $chanceThree : '' }}</td>
-						<td >{{ $chanceThree ? $chanceThree * $course->subject->credits : ''}}</td>
+						<td >{{$score ? $score : '' }}</td>
+						<td >{{ $score ? $score * $course->subject->credits : ''}}</td>
 					@endforeach
 					<td></td>
 					<td></td>
@@ -285,13 +290,12 @@
 					<td></td>
 					<td></td>
 				</tr> 
-				@endif
-				@php
-					$credits = 0;
-					$totalScore = 0;
-					$score = "";
-					$courses = null;
-				@endphp
+			@endif
+			@php
+				$credits = 0;
+				$totalScore = 0;
+				$courses = null;
+			@endphp
 			@endforeach
 		</table> 
 	</div>

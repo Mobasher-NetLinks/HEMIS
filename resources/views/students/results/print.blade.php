@@ -79,51 +79,16 @@
 				<p> <span style="font-size: 12px">{{trans('general.ministry_title')}}</span></p>					
 				<p>{{__('general.university_or_inistitute')}}: <span style="font-size: 12px">{{$university->name}}</span></p>	
 				<p> <span style="font-size: 12px">{{trans('general.student_affair_authority')}}</span></p>					
-				<p> <span style="font-size: 12px">{{__('general.faculty')}}: {{$department->name}}</span> <span style="font-size: 12px">{{__('general.department')}}: {{$department->name}}</span></p>					
-				<td style="text-align:right;width:17%;padding-left:0%;">
+				<p> <span style="font-size: 12px">{{__('general.faculty')}} {{$department->name}}</span> <span style="font-size: 12px">{{__('general.department')}}: {{$department->name}}</span></p>					
+				<td style="text-align:right;width:30%;padding-right:17%;">
 					<img src="{{ asset('img/wezarat-logo.jpg') }}"  style="max-width: 80px"/>		
-				</td>
-				<td style="text-align:right;width:10%;padding-right:1%; padding-left:1%; vertical-align:top;">
-					<table class="table" >
-						<tr>
-							<td colspan="2">{{__('general.summary_of_result')}}</td>
-						</tr>
-						<tr>
-							<td>{{__('general.number_of_involment')}}</td>
-							<td>{{$students->count()}}</td>
-						</tr>
-						<tr>
-							<td>{{__('general.number_of_involment_students')}}</td>
-							<td>{{$students->count()}}</td>
-
-						</tr>
-						<tr>
-							<td>{{__('general.number_of_passed_students')}}</td>
-							<td>{{9}}</td>
-						</tr>
-						<tr>
-							<td>{{__('general.credits')}}</td>
-							<td>10</td>
-						</tr>
-						<tr>
-							<td>{{__('general.danger_credits')}}</td>
-							<td>{{9}}</td>
-						</tr>
-						<tr>
-							<td>{{__('general.failled_students')}}</td>
-							<td>{{$students->count()}}</td>
-						</tr>
-						<tr>
-							<td>{{__('general.divested_students')}}</td>
-							<td>{{$students->count()}}</td>
-						</tr>
-					</table>
 				</td>	
 			</tr>
 		</table>
-		<div style="border: darkgrey solid 2px; width:60% text-align:right;background-color:cornsilk; padding:1px">
-			<p> <span style="font-size: 16px; font-wdith :bold">{{trans('general.credit_base_result_table')}} - {{trans('general.semester')}} {{$semester}}
-				&nbsp;&nbsp; &nbsp;&nbsp; {{trans('general.class_year')}}2. &nbsp;&nbsp; &nbsp;&nbsp; .{{trans('general.department')}}{{$department->name}}.&nbsp;&nbsp; &nbsp;&nbsp; {{trans('general.year')}}{{$year}} </span></p>								
+		<div style="border: darkgrey solid 2px; width:100%; text-align:right;background-color:darkgray; padding:0px">
+			<p> <span style= "font-size: 16px; font-width :bold; color:#000; padding-right:10px">{{trans('general.credit_base_result_table')}} - {{trans('general.semester')}} {{$semester}}
+				 &nbsp;&nbsp;{{trans('general.department')}}{{$department->name}}&nbsp;&nbsp; {{trans('general.year')}}{{$year}}.
+			</span></p>								
 		</div>
 		<table class="table"  style="width:100%;table-layout: fixed;">
 			<tr>
@@ -163,8 +128,11 @@
 			</tr>
 			@php
 				$credits = 0;
+				$gcredits = 0;
 				$totalScore = 0;
 				$courses = null;
+				$deprivedCount = 0;
+				$failedStudentsCount = 0;
 			@endphp
 			@foreach($students as $student)
 
@@ -184,6 +152,8 @@
 					@foreach($courses as $course)
 						<?php
 							$courseScore = $course->getStudentScore($student->id);
+							$score = null;
+							$failCreditsCount = 0;
 							if($courseScore){
 								if($courseScore->total >= 55){
 
@@ -214,21 +184,34 @@
 							}
 							
 							$credits = $credits + $course->subject->credits;
+
+							if(!$courseScore->passed){
+
+								$failCreditsCount = $failCreditsCount + $course->subject->credits;
+							}
+
+							if(($credits % 50 + 2) <= $failCreditsCount){
+
+								$failedStudentsCount = 	$failedStudentsCount + 	$failedStudentsCount ;
+							}
+
+							$gcredits = $credits;
 						?>
-						<td>{{$score ? $score : '' }}</td>
+						<td>{{ $score ? $score : '' }}</td>
 						<td>{{ $score ? $score * $course->subject->credits : ''}}</td>
 					@endforeach
 					
-					<td>{{$credits ?  $credits : '' }}</td>
-					<td>{{$credits ?  $credits : ''}}</td>
+					<td>{{$gcredits ?  $gcredits : '' }}</td>
+					<td>{{$gcredits ?  $gcredits : ''}}</td>
 					<td>{{$totalScore ? $totalScore : '' }}</td>
-					<td>{{ $totalScore ?  number_format($totalScore/$credits,2) : ''}}</td>
-					<td>{{ $totalScore ?  __('general.passed') : ''}}</td>
-					<td>{{ $totalScore ?  getGrade($totalScore/$credits) : ''}}</td>
+					<td>{{ $totalScore ?  number_format($totalScore/$gcredits,2) : ''}}</td>
+					<td>{{ $failCreditsCount < $gcredits % 50 + 2  ?  __('general.passed') : 'ناکام'}}</td>
+					<td>{{ $totalScore ?  getGrade($totalScore/$gcredits) : ''}}</td>
 					<td></td>
 					<td></td>
 					<td rowspan="3"></td>
 				</tr>
+				
 				<tr>
 					<td colspan="2" rowspan="2">{{__('general.criditsCompletion')}}</td>
 					<td>2</td>
@@ -244,11 +227,9 @@
 									$score = null;
 								}
 							}
-							$totalScore =  ($score * $course->subject->credits) + $totalScore ;
-							$credits = $credits + $course->subject->credits;
 						?>
-						<td >{{$score ? $score : '' }}</td>
-						<td >{{ $score ? $score * $course->subject->credits : ''}}</td>
+						<td >{{	$score ? $score : '' }}</td>
+						<td >{{ $score ? $score * $gcredits : ''}}</td>
 					@endforeach
 					<td></td>
 					<td></td>
@@ -274,11 +255,9 @@
 									$score = null;
 								}
 							}
-							$totalScore =  ($score * $course->subject->credits) + $totalScore ;
-							$credits = $credits + $course->subject->credits;
 						?>
 						<td >{{$score ? $score : '' }}</td>
-						<td >{{ $score ? $score * $course->subject->credits : ''}}</td>
+						<td >{{ $score ? $score * $gcredits : ''}}</td>
 					@endforeach
 					<td></td>
 					<td></td>
@@ -298,9 +277,30 @@
 			@endforeach
 		</table> 
 	</div>
+	<div>
+	`<p style="padding-top:20px; font-width :bold;"> خلص نتایج</p> 
+		<p>قرارجدول فوق به تعداد ({{ $students->count() }}) محصل شامل سمستر ({{$semester}}) سال {{$year}}
+			 که ازجمله ({{$students->count() - $failedStudentsCount }}) محصل کامیاب و ({{$failedStudentsCount}})  محصل ناکام 
+			و محصل محروم ({{$failedStudentsCount}}) میباشد .
+		</p>
+		<p>تعداد کریدیت مجموعی ({{$gcredits}}) از جمله کریدت اخطار
+			({{(int)($gcredits /2) + 2}}) میباشد.
+		</p>
+	</div>
 </body>
 </html>
 {{-- <script>
-	window.print();
+
+	const credits = $("#credits" ).val();
+	console.log(credits);
+	const failedStudentsCount = $("#failedStudentsCount" ).val();
+	const allStudetns = $("#allStudents" ).val();
+	const passedStudents = parseInt(allStudetns) - parseInt(failedStudentsCount);
+	const dangerCredits = (credits / 2) + 2; 
+	$('#gcredits').val(credits);
+	$('#passedStudents').val(passedStudents);
+	$('#dangerCredits').val(dangerCredits);
+	$('#gfailedStudentsCount').val(failedStudentsCount);
+
 </script> --}}
 	
