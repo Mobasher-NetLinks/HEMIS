@@ -10,7 +10,7 @@ class DepartmentsController extends Controller
 {
     public function __invoke(Request $request, $university = null)
     {
-        $departments =  Department::select('id', 'name as text');
+        $departments =  Department::select('id',\DB::raw('CONCAT(name, " ... ", faculty) as text'));
         
         if ($university) {            
             $departments->allUniversities()                
