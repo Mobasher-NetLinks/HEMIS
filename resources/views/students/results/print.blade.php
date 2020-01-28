@@ -137,7 +137,7 @@
 			@foreach($students as $student)
 
 				<?php                  
-					$courses = $student->courses()->where('semester',$semester)->where('year',$year)->get();
+					$courses = $student->courses()->where('semester',$semester)->get();
 				?>
 				@if($courses->count() > 0 )
 				<tr>
@@ -154,6 +154,8 @@
 							$courseScore = $course->getStudentScore($student->id);
 							$score = null;
 							$failCreditsCount = 0;
+							$scoreToCount = 0;
+							$score = null;
 							if($courseScore){
 								if($courseScore->total >= 55){
 
@@ -189,12 +191,6 @@
 
 								$failCreditsCount = $failCreditsCount + $course->subject->credits;
 							}
-
-							if(($credits % 50 + 2) <= $failCreditsCount){
-
-								$failedStudentsCount = 	$failedStudentsCount + 	$failedStudentsCount ;
-							}
-
 							$gcredits = $credits;
 						?>
 						<td>{{ $score ? $score : '' }}</td>
@@ -205,7 +201,7 @@
 					<td>{{$gcredits ?  $gcredits : ''}}</td>
 					<td>{{$totalScore ? $totalScore : '' }}</td>
 					<td>{{ $totalScore ?  number_format($totalScore/$gcredits,2) : ''}}</td>
-					<td>{{ $failCreditsCount < $gcredits % 50 + 2  ?  __('general.passed') : 'ناکام'}}</td>
+					<td>{{ ($totalScore/$gcredits) > 55 ?  trans('general.passed') :trans('general.failed')}}</td>
 					<td>{{ $totalScore ?  getGrade($totalScore/$gcredits) : ''}}</td>
 					<td></td>
 					<td></td>
@@ -229,7 +225,7 @@
 							}
 						?>
 						<td >{{	$score ? $score : '' }}</td>
-						<td >{{ $score ? $score * $gcredits : ''}}</td>
+						<td >{{ $score ? $score * $course->subject->credits : ''}}</td>
 					@endforeach
 					<td></td>
 					<td></td>
@@ -257,7 +253,7 @@
 							}
 						?>
 						<td >{{$score ? $score : '' }}</td>
-						<td >{{ $score ? $score * $gcredits : ''}}</td>
+						<td >{{ $score ? $score * $course->subject->credits : ''}}</td>
 					@endforeach
 					<td></td>
 					<td></td>
@@ -269,11 +265,15 @@
 					<td></td>
 				</tr> 
 			@endif
-			@php
+				@php
+				if(($totalScore / $gcredits) < 55){
+
+					$failedStudentsCount ++; 
+				}
 				$credits = 0;
 				$totalScore = 0;
 				$courses = null;
-			@endphp
+				@endphp
 			@endforeach
 		</table> 
 	</div>
@@ -289,18 +289,4 @@
 	</div>
 </body>
 </html>
-{{-- <script>
-
-	const credits = $("#credits" ).val();
-	console.log(credits);
-	const failedStudentsCount = $("#failedStudentsCount" ).val();
-	const allStudetns = $("#allStudents" ).val();
-	const passedStudents = parseInt(allStudetns) - parseInt(failedStudentsCount);
-	const dangerCredits = (credits / 2) + 2; 
-	$('#gcredits').val(credits);
-	$('#passedStudents').val(passedStudents);
-	$('#dangerCredits').val(dangerCredits);
-	$('#gfailedStudentsCount').val(failedStudentsCount);
-
-</script> --}}
 	

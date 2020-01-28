@@ -48,7 +48,7 @@ class StudentsResultController extends Controller
         $university = University::find($request->university);
         $group = $department->group->where('kankor_year', $request->year)->first();
         $students = $group->students;
-        $courseSubjects = $students[0]->courses->where('semester', $request->semester)->where('year', $request->year);
+        $courseSubjects = $students[0]->courses->where('semester', $request->semester);
         $subjectsCount = $courseSubjects->count();
         $year = $request->year;
         $semester = $request->semester;
