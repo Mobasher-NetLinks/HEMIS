@@ -332,7 +332,7 @@
 
             userCanSubmit = true;
             tr.find("input[name='id']").val(result.id);
-            if(result.present % 25 < result.absent){
+            if((result.present * 25) / 100 < result.absent){
                 tr.find(".total").html('محروم');              
             }
             else{

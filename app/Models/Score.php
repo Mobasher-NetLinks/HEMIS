@@ -32,6 +32,22 @@ class Score extends Model
                 $model->passed = 0;
             }            
         });
+
+        static::updating(function ($model) {
+            $model->total = $model->classwork + $model->homework + $model->midterm + $model->final;
+
+            if ($model->chance_four != "" and $model->chance_four >= 55) {
+                $model->passed = 1;
+            } elseif ($model->chance_three != "" and $model->chance_three >= 55) {
+                $model->passed = 1;
+            } elseif ($model->chance_two != "" and $model->chance_two >= 55) {
+                $model->passed = 1;
+            } elseif ($model->total >= 55) {
+                $model->passed = 1;
+            } else {
+                $model->passed = 0;
+            }            
+        });
     }
 
     public function scopeCourseId($query, $courseId)
@@ -82,6 +98,6 @@ class Score extends Model
     
     public function isDeprived(){
 
-        return $this->present % 25 < $this->absent;
+        return ($this->present * 25) / 100 < $this->absent;
     }
 }
