@@ -69,6 +69,7 @@ class CourseDataTable extends DataTable
                 'courses.code',
                 'courses.active',
                 'year',
+                'courses.active',
                 'half_year',
                 'courses.semester',
                 'subjects.title as subject',
@@ -96,7 +97,7 @@ class CourseDataTable extends DataTable
 
             if (isset($input['columns'][3]['search']['value']) and $input['columns'][3]['search']['value'] != '')
                 $query->where('courses.semester', 'like', "%".$input['columns'][3]['search']['value']."%");
-
+            
             if (isset($input['columns'][4]['search']['value']) and $input['columns'][4]['search']['value'] != '')
                 $query->where('subjects.title', 'like', "%".$input['columns'][4]['search']['value']."%");
 
@@ -182,6 +183,7 @@ class CourseDataTable extends DataTable
             //'active'    => ['title' => trans('general.active')],
             'department'    => ['name' => 'departments.name', 'title' => trans('general.department')],
             'university' => ['name' => 'universities.name', 'title' => trans('general.university')],
+            'active'     => ['title' => trans('general.active')],
         ];
     }
 
